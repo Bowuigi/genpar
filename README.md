@@ -4,10 +4,12 @@ A generic, multipurpose string parser
 
 Accepts any string and a token table with the following syntax:
 
+```lua
 tokens = {
  	{":",function() print("found the ':'!") end},
  	{",",function() print("found a comma!") end}
 }
+```
 
 How to add it into a project
 ----------------------------
