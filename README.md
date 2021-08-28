@@ -55,8 +55,8 @@ This value is a special value, the parser depends on it, and as such, it has ext
 
 ```lua
 default_example = {
-	{"init"   , function() parser.used="key"                        },
-	{":"      , function() parser.used="value"                      },
+	{"init"   , function() parser.used="key"                     end},
+	{":"      , function() parser.used="value"                   end},
 	{"default", function() print("Unknown token "..parser.token) end}
 }
 ```
