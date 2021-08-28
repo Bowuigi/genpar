@@ -34,24 +34,24 @@ It is that simple.
 Those functions can read and redefine variables, including the parser ones
 
 Variables you might want to redefine:
-**parser.canOutput** - Boolean - If the parser can output to the used table field or not
-**parser.used**      - String  - Special value, check the next section
+- **parser.canOutput** - Boolean - If the parser can output to the used table field or not
+- **parser.used**      - String  - Special value, check the next section
 
 Other values you can redefine:
-**parser.token** - String - The currently used character
-**parser.any_func** - String - The current "any" function, explained later
-**parser.default_func** - String - The current "default" function, explained later
-**parser.init_func** - String - The current "init" function, explained later
+- **parser.token** - String - The currently used character
+- **parser.any_func** - String - The current "any" function, explained later
+- **parser.default_func** - String - The current "default" function, explained later
+- **parser.init_func** - String - The current "init" function, explained later
 
 parser.used
 -----------
 
 This value is a special value, the parser depends on it, and as such, it has extra stuff like:
 
-**init** - executes before parsing
-**finish** - executes after parsing
-**any** - executes on every character
-**default** - executes when none of the tokens (excluding the special values) was found, for example:
+- **init** - executes before parsing
+- **finish** - executes after parsing
+- **any** - executes on every character
+- **default** - executes when none of the tokens (excluding the special values) was found, for example:
 
 ```lua
 default_example = {
@@ -61,7 +61,7 @@ default_example = {
 }
 ```
 
-**everything else** - executes when the matching token is found, remember that the token is one character wide, but you can work around that with some variables
+- **everything else** - executes when the matching token is found, remember that the token is one character wide, but you can work around that with some variables
 
 Return values and the "result" argument:
 ----------------------------------------
