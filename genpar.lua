@@ -26,6 +26,7 @@ local genpar={
 		token="",
 		used="result",
 		canOutput=true,
+		usedToken=false,
 		any_func=nil,
 		default_func=nil,
 		init_func=nil
@@ -49,10 +50,13 @@ function genpar.parse(str,tokens,result)
 		token="",
 		used="result",
 		canOutput=true,
+		usedToken=false,
 		any_func=nil,
 		default_func=nil,
 		init_func=nil
 	}
+
+	if (str==nil or tokens==nil or result==nil) then return {} end
 
 	-- Get all the special functions
 	for k,v in ipairs({"any","default","init"}) do
@@ -64,33 +68,37 @@ function genpar.parse(str,tokens,result)
 
 	-- Call the init function before the actual string parsing
 	-- Pretty useful if you want to set some initial values like genpar.parser.used
-	genpar.parser.init_func()
+	if (genpar.parser.init_func~=nil) then
+		genpar.parser.init_func()
+	end
 
 	for i=1, #str do
 		-- Get a piece of the string
 		genpar.parser.token=str:sub(i,i)
 
 		-- Run the any token function before checking for the token
-		genpar.parser.any_func()
+		if (genpar.parser.any_func~=nil) then
+			genpar.parser.any_func()
+		end
 
 		-- Check for the desired token, if it is found, continue the loop but set parser.canOutput to false so we don't output the token
 		for n,t in ipairs(tokens) do
 			if (genpar.parser.token==t[1]) then
+				genpar.parser.usedToken=true
 				t[2]()
-				usedToken=true
 			end
 		end
 
-		-- The magic happens here
-		if (genpar.parser.canOutput==true and usedToken==false) then
-			result[genpar.parser.used]=(result[genpar.parser.used] or "")..genpar.parser.token
-		end
-
-		if (usedToken==false) then
+		if (genpar.parser.default_func~=nil and genpar.parser.usedToken==false) then
 			genpar.parser.default_func()
 		end
 
-		usedToken=false
+		-- The magic happens here
+		if (genpar.parser.canOutput==true and genpar.parser.usedToken==false) then
+			result[genpar.parser.used]=(result[genpar.parser.used] or "")..genpar.parser.token
+		end
+
+		genpar.parser.usedToken=false
 	end
 
 	return result
